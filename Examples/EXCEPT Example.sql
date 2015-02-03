@@ -1,0 +1,36 @@
+
+-- USE THE CUSTTEST1 AND CUSTTEST2 TABLES CREATED FOR THE EXCEPT EXAMPLE...
+-- NOTE THAT THE DATA OVERLAPS...LASTNAME E'S AND F'S ARE IN BOTH TABLES
+--
+-- EXCEPT ALWAYS RETURNS ANY DISTINCT VALUES FROM THE QUERY TO THE LEFT
+-- OF THE EXCEPT KEYWORD THAT ARE NOT ALSO FOUND ON THE RIGHT QUERY
+
+SELECT 
+  FirstName, LastName, EmailAddress 
+INTO CustTest1
+FROM 
+  SalesLT.Customer
+WHERE LastName like '[A-F]%'
+
+SELECT 
+  FirstName, LastName, EmailAddress 
+INTO CustTest2
+FROM 
+  SalesLT.Customer
+WHERE LastName like '[E-Z]%'
+
+
+
+SELECT
+  FirstName, LastName, EmailAddress
+FROM
+  CustTest1
+EXCEPT
+SELECT 
+  FirstName, LastName, EmailAddress
+FROM
+  CustTest2
+  ORDER BY LastName, FirstName
+
+  -- NOTE! SWITCH THE TABLES FROM LEFT TO RIGHT TO SEE DIFFERENT RESULTS...
+
